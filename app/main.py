@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from app.core.config import settings
+from core.config import settings
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-from app.modules.worker.runner import worker
+from modules.worker.runner import worker
 
 @app.on_event("startup")
 async def startup_event():
@@ -22,15 +22,15 @@ def root():
 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from app.modules.auth.router import router as auth_router
-from app.modules.plans.router import router as plans_router
-from app.modules.cms.router import router as cms_router
-from app.modules.subscriptions.router import router as subscriptions_router
-from app.modules.delivery.router import router as delivery_router
-from app.modules.auth.explore_router import router as explore_router
-from app.modules.compliance.router import router as compliance_router
-from app.modules.sales.router import router as sales_router
-from app.modules.admin.router import router as admin_router
+from modules.auth.router import router as auth_router
+from modules.plans.router import router as plans_router
+from modules.cms.router import router as cms_router
+from modules.subscriptions.router import router as subscriptions_router
+from modules.delivery.router import router as delivery_router
+from modules.auth.explore_router import router as explore_router
+from modules.compliance.router import router as compliance_router
+from modules.sales.router import router as sales_router
+from modules.admin.router import router as admin_router
 
 # CORS
 app.add_middleware(
@@ -46,7 +46,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from app.core.middleware import RateLimitMiddleware
+from core.middleware import RateLimitMiddleware
 app.add_middleware(RateLimitMiddleware, limit_per_minute=100) # Global limit
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -62,10 +62,10 @@ app.include_router(admin_router, prefix=f"{settings.API_V1_STR}/admin", tags=["a
 app.include_router(sales_router, prefix=f"{settings.API_V1_STR}/sales", tags=["sales"])
 app.include_router(delivery_router, prefix=f"{settings.API_V1_STR}/playback", tags=["playback"])
 
-from app.modules.notifications.router import router as notifications_router
+from modules.notifications.router import router as notifications_router
 app.include_router(notifications_router, prefix=f"{settings.API_V1_STR}/notifications", tags=["notifications"])
 
-from app.modules.moderation.router import router as moderation_router
+from modules.moderation.router import router as moderation_router
 app.include_router(moderation_router, prefix=f"{settings.API_V1_STR}/moderation", tags=["moderation"])
 
 # Force Reload Touch 2
