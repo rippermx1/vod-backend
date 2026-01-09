@@ -3,14 +3,14 @@ import aiofiles
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Any, List
 import os
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.cms import schemas, service, models
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.cms import schemas, service, models
 cms_models = models # Alias for compatibility with new code
-from app.modules.plans import service as plans_service # Import for enforcement
-from app.modules.subscriptions import models as sub_models
-from app.modules.worker.runner import worker
+from modules.plans import service as plans_service # Import for enforcement
+from modules.subscriptions import models as sub_models
+from modules.worker.runner import worker
 from sqlalchemy import func, select
 from sqlalchemy.orm import selectinload
 
@@ -381,7 +381,7 @@ async def get_media_preview(
     print(f"[Preview] Target Path: {target_path}")
             
     # Get Signed URL
-    from app.modules.delivery.b2_service import get_b2_service
+    from modules.delivery.b2_service import get_b2_service
     from fastapi.responses import RedirectResponse
     
     b2 = get_b2_service()

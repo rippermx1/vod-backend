@@ -1,7 +1,7 @@
 import uuid
 from sqlalchemy import Column, String, Boolean, DateTime, func, Enum, Float
 from sqlalchemy.dialects.postgresql import UUID
-from app.core.db import Base
+from core.db import Base
 import enum
 
 class UserRole(str, enum.Enum):

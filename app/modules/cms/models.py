@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, Integer, Float, DateTime, func, Enum, ForeignKey, Text
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
 from sqlalchemy.orm import relationship
-from app.core.db import Base
+from core.db import Base
 import enum
 
 class ContentStatus(str, enum.Enum):
@@ -74,7 +74,7 @@ class Media(Base):
         if self.file_path.startswith("http"):
             return self.file_path
         # Assume B2 path if not static and not http
-        from app.core.config import settings
+        from core.config import settings
         
         # If user provides a full public CDN URL (e.g. Cloudflare), use that
         if settings.B2_PUBLIC_URL:

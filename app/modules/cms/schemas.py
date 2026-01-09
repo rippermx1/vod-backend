@@ -2,7 +2,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime
 from uuid import UUID
-from app.modules.cms.models import ContentStatus, MediaType, ProcessingStatus
+from modules.cms.models import ContentStatus, MediaType, ProcessingStatus
 
 class MediaBase(BaseModel):
     media_type: MediaType

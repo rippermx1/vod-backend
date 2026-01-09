@@ -2,7 +2,7 @@ from datetime import datetime
 from uuid import UUID
 from pydantic import BaseModel
 from typing import Optional
-from app.modules.moderation.models import ReportStatus
+from modules.moderation.models import ReportStatus
 
 class ReportCreate(BaseModel):
     content_id: UUID

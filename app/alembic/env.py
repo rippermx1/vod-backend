@@ -11,18 +11,18 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from app.core.config import settings
-from app.core.db import Base
+from core.config import settings
+from core.db import Base
 # Import models to register them with Base
-from app.modules.auth import models as auth_models
-from app.modules.plans import models as plans_models
-from app.modules.cms import models as cms_models
-from app.modules.subscriptions import models as subscription_models
-from app.modules.admin import models as admin_models
-from app.modules.notifications import models as notifications_models
-from app.modules.moderation import models as moderation_models
-from app.modules.compliance import models as compliance_models
-from app.modules.sales import models as sales_models
+from modules.auth import models as auth_models
+from modules.plans import models as plans_models
+from modules.cms import models as cms_models
+from modules.subscriptions import models as subscription_models
+from modules.admin import models as admin_models
+from modules.notifications import models as notifications_models
+from modules.moderation import models as moderation_models
+from modules.compliance import models as compliance_models
+from modules.sales import models as sales_models
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

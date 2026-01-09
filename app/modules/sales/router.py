@@ -3,11 +3,11 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.cms import models as cms_models
-from app.modules.sales import models as sales_models
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.cms import models as cms_models
+from modules.sales import models as sales_models
 from pydantic import BaseModel
 import uuid
 from datetime import datetime

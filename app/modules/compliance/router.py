@@ -3,10 +3,10 @@ from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.compliance import schemas, service
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.compliance import schemas, service
 
 router = APIRouter()
 

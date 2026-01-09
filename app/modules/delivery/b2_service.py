@@ -1,6 +1,6 @@
 from b2sdk.v2 import InMemoryAccountInfo, B2Api
 from functools import lru_cache
-from app.core.config import settings
+from core.config import settings
 
 class B2Service:
 

@@ -2,10 +2,10 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.moderation import schemas, service
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.moderation import schemas, service
 
 router = APIRouter()
 

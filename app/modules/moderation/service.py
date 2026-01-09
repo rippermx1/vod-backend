@@ -1,9 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.modules.moderation import models, schemas
-from app.modules.cms import models as cms_models
-from app.modules.admin import service as admin_service
-from app.modules.notifications import service as notification_service
+from modules.moderation import models, schemas
+from modules.cms import models as cms_models
+from modules.admin import service as admin_service
+from modules.notifications import service as notification_service
 from uuid import UUID
 from fastapi import HTTPException
 

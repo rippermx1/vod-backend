@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, Integer, DateTime, func, Enum, ForeignKey, Numeric
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from app.core.db import Base
+from core.db import Base
 import enum
 
 class SubscriptionStatus(str, enum.Enum):

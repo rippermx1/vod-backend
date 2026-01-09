@@ -4,10 +4,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 from datetime import datetime, timedelta
 
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.subscriptions import schemas, service, models
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.subscriptions import schemas, service, models
 
 router = APIRouter()
 
@@ -17,8 +17,8 @@ async def list_my_subscriptions(
     db: AsyncSession = Depends(get_db)
 ) -> Any:
     from sqlalchemy import select, func, and_
-    from app.modules.auth.models import User
-    from app.modules.cms.models import Content, ContentStatus
+    from modules.auth.models import User
+    from modules.cms.models import Content, ContentStatus
     
     # Subquery for new posts (last 3 days)
     three_days_ago = datetime.utcnow() - timedelta(days=3)
@@ -97,7 +97,7 @@ async def list_my_subscribers(
          raise HTTPException(status_code=403, detail="Only creators")
          
     from sqlalchemy import select
-    from app.modules.auth.models import User
+    from modules.auth.models import User
     
     # improved query with join to get email
     stmt = (

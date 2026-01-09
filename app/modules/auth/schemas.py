@@ -1,6 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr
-from app.modules.auth.models import UserRole, KYCStatus
+from modules.auth.models import UserRole, KYCStatus
 from uuid import UUID
 
 class UserBase(BaseModel):

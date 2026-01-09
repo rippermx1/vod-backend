@@ -33,7 +33,7 @@ class SystemSettingUpdate(BaseModel):
     value: str
     description: Optional[str] = None
 
-from app.modules.auth.schemas import UserRead
+from modules.auth.schemas import UserRead
 
 class UserUpdateAdmin(BaseModel):
     full_name: Optional[str] = None

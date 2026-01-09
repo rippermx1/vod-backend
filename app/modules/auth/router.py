@@ -4,10 +4,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from app.core.db import get_db
-from app.core import security
-from app.core import deps
-from app.modules.auth import schemas, models
+from core.db import get_db
+from core import security
+from core import deps
+from modules.auth import schemas, models
 
 router = APIRouter()
 
@@ -38,7 +38,7 @@ async def register_user(
         
         # Free Trial for Creators
         if user.role == models.UserRole.CREATOR:
-            from app.modules.plans import service as plans_service
+            from modules.plans import service as plans_service
             # We don't await this blocking response? No, it's critical.
             # But suppress error so registration doesn't fail if plan system is down
             try:
@@ -77,7 +77,7 @@ async def login_access_token(
         raise HTTPException(status_code=400, detail="Inactive user")
         
     # Audit Log
-    from app.modules.admin import service as admin_service
+    from modules.admin import service as admin_service
     await admin_service.create_audit_log(
         db, 
         action="auth.login", 

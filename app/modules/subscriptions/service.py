@@ -3,8 +3,8 @@ from sqlalchemy import select
 from uuid import UUID
 from datetime import datetime, timedelta
 
-from app.modules.subscriptions import models, schemas
-from app.modules.auth.models import User
+from modules.subscriptions import models, schemas
+from modules.auth.models import User
 
 async def subscribe_to_creator(db: AsyncSession, consumer_id: UUID, creator_id: UUID) -> models.ConsumerSubscription:
     # Check if already subscribed

@@ -2,7 +2,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime
 from uuid import UUID
-from app.modules.plans.models import SubscriptionStatus, PaymentStatus
+from modules.plans.models import SubscriptionStatus, PaymentStatus
 
 class PlanFeatureBase(BaseModel):
     feature_key: str

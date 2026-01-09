@@ -4,11 +4,11 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.core.config import settings
-from app.core.db import get_db
-from app.core import security
-from app.modules.auth.models import User
-from app.modules.auth.schemas import TokenData
+from core.config import settings
+from core.db import get_db
+from core import security
+from modules.auth.models import User
+from modules.auth.schemas import TokenData
 
 # We set auto_error=False so we can manually check for token (query or header)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/auth/login", auto_error=False)

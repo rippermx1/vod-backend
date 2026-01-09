@@ -7,14 +7,14 @@ from uuid import UUID
 import uuid
 from datetime import datetime
 
-from app.modules.cms import models, schemas
-from app.core.storage import storage
-from app.modules.auth.models import User
-from app.modules.plans.service import has_feature, get_active_plans, get_creator_subscription, get_plan_limit
-from app.core.db import SessionLocal
-from app.core.db import SessionLocal
+from modules.cms import models, schemas
+from core.storage import storage
+from modules.auth.models import User
+from modules.plans.service import has_feature, get_active_plans, get_creator_subscription, get_plan_limit
+from core.db import SessionLocal
+from core.db import SessionLocal
 import asyncio
-from app.modules.delivery.b2_service import get_b2_service
+from modules.delivery.b2_service import get_b2_service
 import os
 
 async def create_upload_intent(db: AsyncSession, user: User, intent: schemas.MediaUploadIntent):
@@ -103,7 +103,7 @@ async def complete_upload(db: AsyncSession, user: User, media_id: UUID, complete
 async def get_creator_stats(db: AsyncSession, user_id: UUID):
     # 1. Total Subscribers
     # Import inside to avoid circular deps if any
-    from app.modules.subscriptions import models as sub_models
+    from modules.subscriptions import models as sub_models
     
     sub_query = select(func.count(sub_models.ConsumerSubscription.consumer_id)).where(
         sub_models.ConsumerSubscription.creator_id == user_id,
@@ -415,7 +415,7 @@ async def list_creator_public_posts(db: AsyncSession, creator_id: UUID):
     return result.scalars().all()
 
 async def list_consumer_feed(db: AsyncSession, consumer_id: UUID):
-    from app.modules.subscriptions import models as sub_models
+    from modules.subscriptions import models as sub_models
     result = await db.execute(
         select(models.Content)
         .join(sub_models.ConsumerSubscription, models.Content.creator_id == sub_models.ConsumerSubscription.creator_id)

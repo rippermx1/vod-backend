@@ -4,13 +4,13 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from jose import jwt
 
-from app.core.db import get_db
-from app.core import deps
-from app.core.config import settings
-from app.modules.auth import models as auth_models
-from app.modules.delivery import schemas
-from app.modules.cms import models as cms_models
-from app.modules.subscriptions import service as sub_service
+from core.db import get_db
+from core import deps
+from core.config import settings
+from modules.auth import models as auth_models
+from modules.delivery import schemas
+from modules.cms import models as cms_models
+from modules.subscriptions import service as sub_service
 
 router = APIRouter()
 
@@ -64,7 +64,7 @@ async def generate_playback_token(
                 if content:
                     # Check Purchase Entitlement
                     from sqlalchemy import select
-                    from app.modules.sales import models as sales_models
+                    from modules.sales import models as sales_models
                     
                     purchase_query = select(sales_models.ContentPurchase).where(
                         sales_models.ContentPurchase.user_id == current_user.id,
@@ -141,7 +141,7 @@ async def get_secure_media(
         raise HTTPException(status_code=404, detail="Media not found")
 
     # 3. Stream File (Redirect to B2/Mock URL)
-    from app.modules.delivery.b2_service import get_b2_service
+    from modules.delivery.b2_service import get_b2_service
     from fastapi.responses import RedirectResponse
     
     b2 = get_b2_service()
@@ -202,7 +202,7 @@ async def get_content_cover(
     
     # B2 Signing
     if not cover_url.startswith("http") and not cover_url.startswith("/"):
-         from app.modules.delivery.b2_service import get_b2_service
+         from modules.delivery.b2_service import get_b2_service
          b2 = get_b2_service()
          signed_url = b2.get_download_url(cover_url)
          if signed_url:

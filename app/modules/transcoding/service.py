@@ -5,8 +5,8 @@ import shutil
 import logging
 from uuid import UUID
 from datetime import datetime
-from app.core.db import SessionLocal
-from app.modules.cms import models
+from core.db import SessionLocal
+from modules.cms import models
 from sqlalchemy import select
 from pathlib import Path
 
@@ -49,7 +49,7 @@ class Transcoder:
                     await db.commit()
                     
                     # Notify User
-                    from app.modules.notifications import service as notification_service
+                    from modules.notifications import service as notification_service
                     await notification_service.create_notification(
                         db,
                         user_id=media.creator_id,
@@ -112,7 +112,7 @@ class MediaProcessor:
             
             # Send Notification
             try:
-                from app.modules.notifications import service as notif_service
+                from modules.notifications import service as notif_service
                 await notif_service.create_notification(
                     self.db,
                     self.media.creator_id,
@@ -154,7 +154,7 @@ class MediaProcessor:
         # 2. B2 File (Assume it's a key if not static)
         # Download to temp dir
         logger.info(f"Downloading from B2: {raw_path}")
-        from app.modules.delivery.b2_service import get_b2_service
+        from modules.delivery.b2_service import get_b2_service
         b2 = get_b2_service()
         
         local_dl_path = self.work_dir / "source.mp4" # Assume mp4 or use extension from filename
@@ -293,7 +293,7 @@ v2/playlist.m3u8
             parent_key = os.path.dirname(original_key)
             hls_prefix = f"{parent_key}/hls"
             
-            from app.modules.delivery.b2_service import get_b2_service
+            from modules.delivery.b2_service import get_b2_service
             b2 = get_b2_service()
             loop = asyncio.get_event_loop()
             

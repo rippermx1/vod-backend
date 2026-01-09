@@ -2,11 +2,11 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.notifications import schemas, service
-from app.modules.notifications.broadcaster import broadcaster
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.notifications import schemas, service
+from modules.notifications.broadcaster import broadcaster
 from fastapi.responses import StreamingResponse
 import asyncio
 import json

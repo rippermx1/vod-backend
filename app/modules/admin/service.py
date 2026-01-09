@@ -1,9 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
-from app.modules.auth import models as auth_models
-from app.modules.compliance import models as kyc_models
-from app.modules.plans import models as plan_models
-from app.modules.admin.models import AuditLog
+from modules.auth import models as auth_models
+from modules.compliance import models as kyc_models
+from modules.plans import models as plan_models
+from modules.admin.models import AuditLog
 from uuid import UUID
 from typing import Optional, Dict, Any
 
@@ -152,7 +152,7 @@ async def update_user_plan(db: AsyncSession, user_id: UUID, plan_id: Optional[UU
         return None
     
     # Needs to update CreatorSubscription, not user.plan_id
-    from app.modules.plans import models as plan_models
+    from modules.plans import models as plan_models
     
     # Find existing active or recent subscription
     # Logic: "Admin Override" implies forcing the current active plan.
@@ -289,7 +289,7 @@ async def update_plan(db: AsyncSession, plan_id: UUID, plan_in: Any) -> plan_mod
         await db.delete(l)
         
     # Add new
-    from app.modules.plans import models as pm
+    from modules.plans import models as pm
     for feat in plan_in.features:
         db.add(pm.SaasPlanFeature(plan_id=db_plan.id, feature_key=feat.feature_key, is_enabled=feat.is_enabled))
     for lim in plan_in.limits:
@@ -303,7 +303,7 @@ async def get_audit_logs(db: AsyncSession, limit: int = 50):
     result = await db.execute(select(AuditLog).order_by(AuditLog.created_at.desc()).limit(limit))
     return result.scalars().all()
 
-from app.modules.admin.models import SystemSetting
+from modules.admin.models import SystemSetting
 
 async def get_system_settings(db: AsyncSession):
     result = await db.execute(select(SystemSetting))
@@ -345,12 +345,12 @@ async def get_user_details(db: AsyncSession, user_id: UUID) -> Any:
     # For MVP we can do simple queries or just return 0s if relationships aren't eager loaded
     
     # Content Count
-    from app.modules.cms.models import Content
+    from modules.cms.models import Content
     c_res = await db.execute(select(func.count(Content.id)).where(Content.creator_id == user_id))
     content_count = c_res.scalar() or 0
     
     # Active Subscriptions (As Consumer)
-    from app.modules.subscriptions.models import ConsumerSubscription, ConsumerSubscriptionStatus
+    from modules.subscriptions.models import ConsumerSubscription, ConsumerSubscriptionStatus
     s_res = await db.execute(select(func.count(ConsumerSubscription.id)).where(
         (ConsumerSubscription.consumer_id == user_id) & 
         (ConsumerSubscription.status == ConsumerSubscriptionStatus.ACTIVE)
@@ -367,7 +367,7 @@ async def get_user_details(db: AsyncSession, user_id: UUID) -> Any:
     logs = l_res.scalars().all()
     
     # [NEW] Get Current Plan ID
-    from app.modules.plans import models as plan_models
+    from modules.plans import models as plan_models
     sub_res = await db.execute(
         select(plan_models.CreatorSubscription)
         .where(plan_models.CreatorSubscription.creator_id == user_id)

@@ -1,10 +1,10 @@
 from typing import Any, List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.plans import schemas, service
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.plans import schemas, service
 
 router = APIRouter()
 
@@ -65,7 +65,7 @@ async def create_payment_method(
     
     # Deactivate old ones? For MVP just add one or update existing?
     # Let's simple add new one
-    from app.modules.plans import models
+    from modules.plans import models
     method = models.CreatorPaymentMethod(
         creator_id=current_user.id,
         payment_type=method_in.payment_type,
@@ -83,7 +83,7 @@ async def get_creator_payment_methods(
     db: AsyncSession = Depends(get_db)
 ) -> Any:
     from sqlalchemy import select
-    from app.modules.plans import models
+    from modules.plans import models
     result = await db.execute(
         select(models.CreatorPaymentMethod)
         .where(models.CreatorPaymentMethod.creator_id == creator_id, models.CreatorPaymentMethod.is_active == True)

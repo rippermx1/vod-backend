@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update
-from app.modules.notifications import models, schemas
+from modules.notifications import models, schemas
 from uuid import UUID
 from typing import Optional
 
@@ -26,7 +26,7 @@ async def create_notification(
     
     # Real-time Broadcast
     try:
-        from app.modules.notifications.broadcaster import broadcaster
+        from modules.notifications.broadcaster import broadcaster
         payload = {
             "id": str(notification.id),
             "title": notification.title,

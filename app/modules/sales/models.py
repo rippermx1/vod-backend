@@ -2,7 +2,7 @@
 import uuid
 from sqlalchemy import Column, String, Float, DateTime, func, ForeignKey, Enum
 from sqlalchemy.dialects.postgresql import UUID
-from app.core.db import Base
+from core.db import Base
 import enum
 
 class PurchaseStatus(str, enum.Enum):

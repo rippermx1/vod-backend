@@ -2,7 +2,7 @@ import uuid
 import enum
 from sqlalchemy import Column, String, Enum, ForeignKey, Text, DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
-from app.core.db import Base
+from core.db import Base
 
 class ReportStatus(str, enum.Enum):
     PENDING = "pending"

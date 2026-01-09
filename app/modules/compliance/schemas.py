@@ -2,7 +2,7 @@ from datetime import datetime
 from uuid import UUID
 from pydantic import BaseModel
 from typing import Optional
-from app.modules.compliance.models import KYCStatus
+from modules.compliance.models import KYCStatus
 
 class KYCSubmit(BaseModel):
     pass # Uploads are handled via Form/File, no JSON body initially

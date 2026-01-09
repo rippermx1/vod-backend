@@ -2,11 +2,11 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models as auth_models
-from app.modules.auth import schemas as auth_schemas # Added for UserRead response model
-from app.modules.admin import schemas, service
+from core.db import get_db
+from core import deps
+from modules.auth import models as auth_models
+from modules.auth import schemas as auth_schemas # Added for UserRead response model
+from modules.admin import schemas, service
 from typing import Any, Dict
 
 router = APIRouter()
@@ -62,7 +62,7 @@ async def update_user_status(
         
     return user
 
-from app.modules.plans import schemas as plan_schemas
+from modules.plans import schemas as plan_schemas
 
 @router.get("/plans", response_model=list[plan_schemas.PlanRead])
 async def get_admin_plans(

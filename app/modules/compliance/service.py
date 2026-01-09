@@ -1,10 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from fastapi import UploadFile, HTTPException
-from app.modules.compliance import models, schemas
-from app.modules.auth import models as auth_models
-from app.modules.compliance import models, schemas
-from app.modules.auth import models as auth_models
+from modules.compliance import models, schemas
+from modules.auth import models as auth_models
+from modules.compliance import models, schemas
+from modules.auth import models as auth_models
 from uuid import UUID
 from uuid import UUID
 
@@ -21,7 +21,7 @@ async def submit_kyc(
         raise HTTPException(status_code=400, detail="Already verified")
     
     # 2. Upload Files to B2 (kyc folder)
-    from app.modules.delivery.b2_service import get_b2_service
+    from modules.delivery.b2_service import get_b2_service
     b2 = get_b2_service()
     
     # Read files (Standard KYC images are small enough for memory)
@@ -101,7 +101,7 @@ async def review_kyc(
     submission.admin_notes = notes
     
     # Audit Log
-    from app.modules.admin import service as admin_service
+    from modules.admin import service as admin_service
     await admin_service.create_audit_log(
         db,
         action=f"kyc.review.{action}",
@@ -112,7 +112,7 @@ async def review_kyc(
     )
     
     # Notification
-    from app.modules.notifications import service as notification_service
+    from modules.notifications import service as notification_service
     await notification_service.create_notification(
         db,
         user_id=submission.user_id,

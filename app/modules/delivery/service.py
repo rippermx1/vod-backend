@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import jwt, JWTError
-from app.core.config import settings
+from core.config import settings
 from uuid import UUID
 from fastapi import HTTPException, status
 

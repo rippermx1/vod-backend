@@ -38,7 +38,7 @@ class Worker:
 
     async def _process_queue(self):
         """Main loop consuming jobs."""
-        from app.modules.transcoding.service import Transcoder
+        from modules.transcoding.service import Transcoder
         # Import here to avoid circular imports if any, or dependency issues at module level
         
         while self.is_running:

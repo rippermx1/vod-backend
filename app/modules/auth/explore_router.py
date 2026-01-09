@@ -3,9 +3,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from app.core.db import get_db
-from app.core import deps
-from app.modules.auth import models, schemas
+from core.db import get_db
+from core import deps
+from modules.auth import models, schemas
 
 router = APIRouter()
 
@@ -54,7 +54,7 @@ async def list_creators(
 
 from uuid import UUID
 from fastapi import HTTPException
-from app.modules.auth import models
+from modules.auth import models
 
 @router.get("/{user_id}", response_model=schemas.CreatorProfileResponse)
 async def get_creator_profile(
@@ -73,7 +73,7 @@ async def get_creator_profile(
     
     if current_user:
         # Check subscription
-        from app.modules.subscriptions import service as sub_service
+        from modules.subscriptions import service as sub_service
         is_subscribed = await sub_service.check_subscription_access(db, current_user.id, user_id)
         response.is_subscribed = is_subscribed
         
@@ -150,7 +150,7 @@ async def get_creator_avatar(
     
     # If it's a B2 path (no protocol), sign it
     if not avatar_url.startswith("http") and not avatar_url.startswith("/"):
-         from app.modules.delivery.b2_service import get_b2_service
+         from modules.delivery.b2_service import get_b2_service
          b2 = get_b2_service()
          signed_url = b2.get_download_url(avatar_url)
          if signed_url:

@@ -2,7 +2,7 @@ from datetime import datetime
 from uuid import UUID
 from pydantic import BaseModel
 from typing import Optional
-from app.modules.subscriptions.models import ConsumerSubscriptionStatus
+from modules.subscriptions.models import ConsumerSubscriptionStatus
 
 class SubscriptionCreate(BaseModel):
     pass 

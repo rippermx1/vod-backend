@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
-from app.modules.plans import models, schemas
+from modules.plans import models, schemas
 from uuid import UUID
 from datetime import datetime, timedelta
 
@@ -53,7 +53,7 @@ async def confirm_payment_and_subscribe(db: AsyncSession, payment_id: str, admin
     payment.reviewed_by = admin_id
     
     # Audit Log
-    from app.modules.admin import service as admin_service
+    from modules.admin import service as admin_service
     await admin_service.create_audit_log(
         db,
         action="payment.confirm",
@@ -64,7 +64,7 @@ async def confirm_payment_and_subscribe(db: AsyncSession, payment_id: str, admin
     )
 
     # Notification
-    from app.modules.notifications import service as notification_service
+    from modules.notifications import service as notification_service
     await notification_service.create_notification(
         db,
         user_id=payment.creator_id,
@@ -128,7 +128,7 @@ async def get_plan_limit(db: AsyncSession, creator_id: UUID, limit_key: str) -> 
     return 0 # Default 0 if not specified
 
 async def list_pending_payments(db: AsyncSession):
-    from app.modules.auth import models as auth_models
+    from modules.auth import models as auth_models
     stmt = (
         select(models.SaasPayment, auth_models.User.email)
         .join(auth_models.User, models.SaasPayment.creator_id == auth_models.User.id)
@@ -154,8 +154,8 @@ async def list_pending_payments(db: AsyncSession):
     return response
 
 from fastapi import HTTPException, Depends
-from app.core import deps
-from app.modules.auth import models as auth_models
+from core import deps
+from modules.auth import models as auth_models
 
 async def require_active_saas_plan(
     current_user: auth_models.User = Depends(deps.get_current_active_user),
