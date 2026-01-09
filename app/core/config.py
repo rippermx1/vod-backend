@@ -15,7 +15,18 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "vod_saas"
     # Port is usually 5432
     DATABASE_URL: Optional[str] = None
+    from pydantic import field_validator, AnyHttpUrl
+    
     BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174"]
+
+    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
+    @classmethod
+    def assemble_cors_origins(cls, v: str | list[str]) -> list[str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",")]
+        elif isinstance(v, (list, str)):
+            return v
+        raise ValueError(v)
 
 
     @property
