@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "vod_saas"
     # Port is usually 5432
     DATABASE_URL: Optional[str] = None
+    BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174"]
+
 
     @property
     def async_database_url(self) -> str:
