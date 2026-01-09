@@ -33,7 +33,7 @@ class Content(Base):
     status = Column(Enum(ContentStatus), default=ContentStatus.DRAFT, nullable=False)
     
     is_free = Column(Boolean, default=False, nullable=False) # False = Requires Subscription
-    is_free = Column(Boolean, default=False, nullable=False) # False = Requires Subscription
+
     price = Column(Float, nullable=True, default=0.0)
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
