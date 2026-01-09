@@ -25,7 +25,7 @@ def upgrade() -> None:
     sa.Column('user_id', sa.UUID(), nullable=False),
     sa.Column('document_url', sa.String(), nullable=False),
     sa.Column('selfie_url', sa.String(), nullable=False),
-    sa.Column('status', sa.Enum('PENDING', 'VERIFIED', 'REJECTED', name='kycstatus'), nullable=False),
+    sa.Column('status', sa.Enum('NONE', 'PENDING', 'VERIFIED', 'REJECTED', name='kycstatus'), nullable=False),
     sa.Column('admin_notes', sa.String(), nullable=True),
     sa.Column('reviewed_by', sa.UUID(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),

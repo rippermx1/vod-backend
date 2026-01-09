@@ -27,7 +27,7 @@ def upgrade() -> None:
         sa.Column('full_name', sa.String(), nullable=True),
         sa.Column('role', sa.Enum('ADMIN', 'CREATOR', 'CONSUMER', name='userrole'), nullable=False),
         sa.Column('is_active', sa.Boolean(), nullable=True),
-        sa.Column('kyc_status', sa.Enum('NONE', 'PENDING', 'VERIFIED', 'REJECTED', name='kycstatus'), nullable=False),
+
         sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.func.now(), nullable=True),
         sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
         sa.PrimaryKeyConstraint('id')
